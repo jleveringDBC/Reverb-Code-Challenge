@@ -1,0 +1,19 @@
+Initialize Parser
+Initialize Library (of Records)
+
+Use Parser to:
+Locate files
+Open each file in turn
+  -Determine delimeter
+  -Read each line
+    -Save attributes as variables
+    -Initialize new Record object with variables
+    -Save as part of Library
+
+
+Sort Library by gender then last name
+Output each Record in Library
+Sort Library by birth date
+Output each Record in Library
+Sort Library by last name
+Output each Record in Library
