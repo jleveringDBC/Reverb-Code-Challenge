@@ -30,7 +30,7 @@ describe Parser do
       expect(records.last).to be_a(Record)
       expect(records.last.last_name).to eq("Bouillon")
       expect(records.last.gender).to eq("Male")
-      expect(records.last.birth_date).to eq(Date.strptime("6-3-1975", "%m-%d-%Y"))
+      expect(records.last.birth_date).to eq("06/03/1975")
     end
 
     context 'when passed pipe delimited records' do

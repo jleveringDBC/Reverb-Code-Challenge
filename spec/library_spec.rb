@@ -37,14 +37,21 @@ describe Library do
   describe '#sort_by_birth_date!' do
     it 'appropriately sorts records by birth date' do
       valid_library.sort_by_birth_date!
-      expect(valid_library.records).to start_with(record1, record2)
+      expect(valid_library.records).to start_with(record2, record1)
     end
   end
 
   describe '#sort_by_last_name!' do
     it 'appropriately sorts records by last name' do
       valid_library.sort_by_last_name!
-      expect(valid_library.records).to start_with(record2, record1)
+      expect(valid_library.records).to start_with(record1, record2)
+    end
+  end
+
+  describe '#display' do
+    it 'displays all records' do
+      expect(valid_library.display).to start_with(record2.display)
+      expect(valid_library.display).to end_with(record1.display)
     end
   end
 
