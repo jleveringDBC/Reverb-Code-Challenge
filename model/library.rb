@@ -19,11 +19,11 @@ class Library
   end
 
   def sort_by_birth_date!
-    @records.sort! { |a, b| b.birth_date <=> a.birth_date }
+    @records.sort! { |a, b| a.birth_date <=> b.birth_date }
   end
 
   def sort_by_last_name!
-    @records.sort_by! { |record| record.last_name }
+    @records.sort_by!{ |record| record.last_name }.reverse!
   end
 
   def display

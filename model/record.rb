@@ -11,8 +11,12 @@ class Record
     @favorite_color = attributes_hash[:favorite_color]
   end
 
+  def birth_date
+    @birth_date.strftime("%m/%d/%Y")
+  end
+
   def display
-    "#{@last_name} #{@first_name} #{@gender} #{@birth_date} #{@favorite_color}"
+    "#{@last_name} #{@first_name} #{@gender} #{self.birth_date} #{@favorite_color}"
   end
 
 end
