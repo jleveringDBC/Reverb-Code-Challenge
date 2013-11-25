@@ -1,5 +1,7 @@
 class Record
 
+  attr_reader :first_name, :last_name, :gender, :birth_date, :favorite_color
+
   def initialize(attributes_hash)
     @first_name = attributes_hash[:first_name]
     @last_name = attributes_hash[:last_name]
