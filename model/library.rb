@@ -26,4 +26,13 @@ class Library
     @records.sort_by! { |record| record.last_name }
   end
 
+  def display
+    result = ""
+    @records.each do |record|
+      result += record.display
+      result += "\n" unless record == @records.last
+    end
+    result
+  end
+
 end

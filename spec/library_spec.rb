@@ -48,4 +48,11 @@ describe Library do
     end
   end
 
+  describe '#display' do
+    it 'displays all records' do
+      expect(valid_library.display).to start_with(record2.display)
+      expect(valid_library.display).to end_with(record1.display)
+    end
+  end
+
 end
