@@ -1,3 +1,6 @@
+require_relative 'library'
+require_relative 'record'
+
 class Parser
 
   attr_reader :library
