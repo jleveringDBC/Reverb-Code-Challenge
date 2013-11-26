@@ -1,6 +1,5 @@
 require_relative 'spec_helper'
 require_relative '../model/parser'
-require_relative '../model/library'
 
 describe Parser do
 
@@ -22,7 +21,7 @@ describe Parser do
 
   describe '#process' do
     it 'takes a an array as argument' do
-      expect(parser.process(["pipe_test.txt", "comma_test.txt"])).to_not raise_error
+      expect(parser.process(["spec/examples/pipe_test.txt", "spec/examples/comma_test.txt"])).to_not raise_error
     end
 
     def post_process_expectations(records)
@@ -36,21 +35,21 @@ describe Parser do
     context 'when passed pipe delimited records' do
 
       it 'saves each line as a record in the library' do
-        parser.process(['pipe_test.txt'])
+        parser.process(['spec/examples/pipe_test.txt'])
         post_process_expectations(parser.library.records)
       end
     end
 
     context 'when passed comma delimited records' do
       it 'saves each line as a record in the library' do
-        parser.process(['comma_test.txt'])
+        parser.process(['spec/examples/comma_test.txt'])
         post_process_expectations(parser.library.records)
       end
     end
 
     context 'when passed space delimited records' do
       it 'saves each line as a record in the library' do
-        parser.process(['space_test.txt'])
+        parser.process(['spec/examples/space_test.txt'])
         post_process_expectations(parser.library.records)
       end
     end

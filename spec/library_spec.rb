@@ -1,6 +1,5 @@
 require_relative 'spec_helper'
 require_relative '../model/library'
-require_relative '../model/record'
 
 describe Library do
 

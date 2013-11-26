@@ -1,0 +1,3 @@
+Smith | Steve | D | Male | Red | 3-3-1985
+Bonk | Radek | Samuel | M | Green | 6-3-1975
+Bouillon | Francis | G | M | Blue | 6-3-14975
