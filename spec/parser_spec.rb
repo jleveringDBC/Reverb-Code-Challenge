@@ -88,4 +88,19 @@ describe Parser do
 
   end
 
+  describe '#process_new_record' do
+    it 'adds a new record to the library' do
+      parser.process_new_record("Bouillon Francis G M 6-3-1975 Blue")
+      record = parser.library.records.last
+      expect(record.first_name).to eq "Francis"
+      expect(record.gender).to eq "Male"
+      expect(record.formatted_birth_date).to eq "06/03/1975"
+    end
+
+    it 'writes new record to file' do
+      parser.process_new_record("Levering Joseph W M 12-18-1986 Black")
+      expect(`tail -n 1 posted_records.txt`).to eq ("Levering Joseph Male 12/18/1986 Black\n")
+    end
+  end
+
 end
