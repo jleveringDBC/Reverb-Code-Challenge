@@ -34,7 +34,38 @@ class Parser
     end
   end
 
+  def process_new_record(line)
+    delimiter = delimiter(line)
+    record_info = match_data(line, delimiter)
+    record_variables = parse_record(record_info, delimiter)
+    new_record = Record.new(record_variables)
+    @library.add_record(new_record)
+    File.open('posted_records.txt', 'w') do |f|
+      f.puts new_record.display
+    end
+  end
+
   private
+
+  def delimiter(line)
+    if line.match(/\|/)
+      return "pipe"
+    elsif line.match(/,/)
+      return "comma"
+    else
+      return "space"
+    end
+  end
+
+  def match_data(line, delimiter)
+    if delimiter == "pipe"
+      line.match(/(.*) \| (.*) \| (.*) \| (.*) \| (.*) \| (.*)/)
+    elsif delimiter == "comma"
+      line.match(/(.*), (.*), (.*), (.*), (.*)/)
+    elsif delimiter == "space"
+      line.match(/(.*) (.*) (.*) (.*) (.*) (.*)/)
+    end
+  end
 
   def parse_record(record_info, delimiter)
     first_name = record_info[2]

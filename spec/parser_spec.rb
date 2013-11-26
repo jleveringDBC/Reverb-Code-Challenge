@@ -21,8 +21,8 @@ describe Parser do
   end
 
   describe '#process' do
-    it 'takes a variable number of arguments' do
-      expect(parser.process("pipe_test.txt", "comma_test.txt")).to_not raise_error
+    it 'takes a an array as argument' do
+      expect(parser.process(["pipe_test.txt", "comma_test.txt"])).to_not raise_error
     end
 
     def post_process_expectations(records)
@@ -36,23 +36,70 @@ describe Parser do
     context 'when passed pipe delimited records' do
 
       it 'saves each line as a record in the library' do
-        parser.process('pipe_test.txt')
+        parser.process(['pipe_test.txt'])
         post_process_expectations(parser.library.records)
       end
     end
 
     context 'when passed comma delimited records' do
       it 'saves each line as a record in the library' do
-        parser.process('comma_test.txt')
+        parser.process(['comma_test.txt'])
         post_process_expectations(parser.library.records)
       end
     end
 
     context 'when passed space delimited records' do
       it 'saves each line as a record in the library' do
-        parser.process('space_test.txt')
+        parser.process(['space_test.txt'])
         post_process_expectations(parser.library.records)
       end
+    end
+  end
+
+  describe '#delimiter' do
+    it 'returns "pipe" when | is present' do
+      expect(parser.send(:delimiter, "Pipe | Example")).to eq("pipe")
+    end
+
+    it 'returns "comma" when , is present' do
+      expect(parser.send(:delimiter, "Comma, Example")).to eq("comma")
+    end
+
+    it 'returns "space" when | and , are not present' do
+      expect(parser.send(:delimiter, "Space Example")).to eq("space")
+    end
+  end
+
+  describe '#match_data' do
+    it 'returns match data when given "pipe" as delimiter' do
+      match = parser.send(:match_data, "Bouillon | Francis | G | M | Blue | 6-3-1975", "pipe")
+      expect(match[2]).to eq "Francis"
+    end
+
+    it 'returns match data when given "comma" as delimiter' do
+      match = parser.send(:match_data, "Bouillon, Francis, Male, Blue, 6/3/1975", "comma")
+      expect(match[2]).to eq "Francis"
+    end
+
+    it 'returns match data when given "space" as delimiter' do
+      match = parser.send(:match_data, "Bouillon Francis G M 6-3-1975 Blue", "space")
+      expect(match[2]).to eq "Francis"
+    end
+
+  end
+
+  describe '#process_new_record' do
+    it 'adds a new record to the library' do
+      parser.process_new_record("Bouillon Francis G M 6-3-1975 Blue")
+      record = parser.library.records.last
+      expect(record.first_name).to eq "Francis"
+      expect(record.gender).to eq "Male"
+      expect(record.formatted_birth_date).to eq "06/03/1975"
+    end
+
+    it 'writes new record to file' do
+      parser.process_new_record("Levering Joseph W M 12-18-1986 Black")
+      expect(`tail -n 1 posted_records.txt`).to eq ("Levering Joseph Male 12/18/1986 Black\n")
     end
   end
 
