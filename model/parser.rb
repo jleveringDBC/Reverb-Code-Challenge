@@ -34,7 +34,28 @@ class Parser
     end
   end
 
+
   private
+
+  def delimiter(line)
+    if line.match(/\|/)
+      return "pipe"
+    elsif line.match(/,/)
+      return "comma"
+    else
+      return "space"
+    end
+  end
+
+  def match_data(line, delimiter)
+    if delimiter == "pipe"
+      line.match(/(.*) \| (.*) \| (.*) \| (.*) \| (.*) \| (.*)/)
+    elsif delimiter == "comma"
+      line.match(/(.*), (.*), (.*), (.*), (.*)/)
+    elsif delimiter == "space"
+      line.match(/(.*) (.*) (.*) (.*) (.*) (.*)/)
+    end
+  end
 
   def parse_record(record_info, delimiter)
     first_name = record_info[2]

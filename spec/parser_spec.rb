@@ -56,5 +56,36 @@ describe Parser do
     end
   end
 
+  describe '#delimiter' do
+    it 'returns "pipe" when | is present' do
+      expect(parser.send(:delimiter, "Pipe | Example")).to eq("pipe")
+    end
+
+    it 'returns "comma" when , is present' do
+      expect(parser.send(:delimiter, "Comma, Example")).to eq("comma")
+    end
+
+    it 'returns "space" when | and , are not present' do
+      expect(parser.send(:delimiter, "Space Example")).to eq("space")
+    end
+  end
+
+  describe '#match_data' do
+    it 'returns match data when given "pipe" as delimiter' do
+      match = parser.send(:match_data, "Bouillon | Francis | G | M | Blue | 6-3-1975", "pipe")
+      expect(match[2]).to eq "Francis"
+    end
+
+    it 'returns match data when given "comma" as delimiter' do
+      match = parser.send(:match_data, "Bouillon, Francis, Male, Blue, 6/3/1975", "comma")
+      expect(match[2]).to eq "Francis"
+    end
+
+    it 'returns match data when given "space" as delimiter' do
+      match = parser.send(:match_data, "Bouillon Francis G M 6-3-1975 Blue", "space")
+      expect(match[2]).to eq "Francis"
+    end
+
+  end
 
 end
