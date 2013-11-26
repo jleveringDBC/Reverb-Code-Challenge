@@ -1,3 +1,6 @@
+require_relative 'library'
+require_relative 'record'
+
 class Parser
 
   attr_reader :library
@@ -10,7 +13,7 @@ class Parser
     end
   end
 
-  def process(*filenames)
+  def process(filenames)
     filenames.each do |filename|
       File.open(filename, 'r') do |f|
         while (line = f.gets)
