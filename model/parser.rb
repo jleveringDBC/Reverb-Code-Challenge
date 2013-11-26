@@ -13,7 +13,7 @@ class Parser
     end
   end
 
-  def process(*filenames)
+  def process(filenames)
     filenames.each do |filename|
       File.open(filename, 'r') do |f|
         while (line = f.gets)
