@@ -38,10 +38,9 @@ class Parser
     delimiter = delimiter(line)
     record_info = match_data(line, delimiter)
     record_variables = parse_record(record_info, delimiter)
-    new_record = Record.new(record_variables)
-    @library.add_record(new_record)
-    File.open('posted_records.txt', 'w') do |f|
-      f.puts new_record.display
+    @library.add_record(Record.new(record_variables))
+    File.open('posted_records.txt', 'a') do |f|
+      f.puts line
     end
   end
 

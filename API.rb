@@ -7,7 +7,7 @@ module RecordParser
     helpers do
       def new_parser
         fresh_parser = Parser.new
-        fresh_parser.process(["pipe.txt", "comma.txt", "space.txt"])
+        fresh_parser.process(["pipe.txt", "comma.txt", "space.txt", "posted_records.txt"])
         fresh_parser
       end
 
@@ -25,8 +25,12 @@ module RecordParser
     resources :records do
 
       desc 'adds record to library'
+      params do
+        requires :record, type: String, desc: "Record to be added."
+      end
       post do
-        return "Added a record!"
+        parser.process_new_record(params[:record])
+        return "Added the new record!"
       end
 
       desc 'returns records sorted by gender'

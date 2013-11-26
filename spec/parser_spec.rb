@@ -99,7 +99,7 @@ describe Parser do
 
     it 'writes new record to file' do
       parser.process_new_record("Levering Joseph W M 12-18-1986 Black")
-      expect(`tail -n 1 posted_records.txt`).to eq ("Levering Joseph Male 12/18/1986 Black\n")
+      expect(`tail -n 1 posted_records.txt`).to eq ("Levering Joseph W M 12-18-1986 Black\n")
     end
   end
 
