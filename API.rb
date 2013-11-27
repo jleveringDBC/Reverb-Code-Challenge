@@ -29,7 +29,11 @@ module RecordParser
         requires :record, type: String, desc: "Record to be added."
       end
       post do
-        parser.process_new_record(params[:record])
+        begin
+          parser.process_new_record(params[:record])
+        rescue
+          return "Error! Record not added."
+        end
         return "Added the new record!"
       end
 
