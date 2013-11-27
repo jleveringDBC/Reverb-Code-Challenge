@@ -4,6 +4,8 @@ require_relative 'spec_helper'
 require_relative '../API'
 include RecordParser::API::helpers
 
+$filenames = ["pipe.txt", "comma.txt", "space.txt", "posted_records.txt"]
+
 describe RecordParser::API do
   include Rack::Test::Methods
 
@@ -16,18 +18,25 @@ describe RecordParser::API do
   end
 
   let (:parser) { new_parser }
-  let (:record) { URI::encode("Hendrix | James | M | M | Purple | 11-27-1942") }
+  let (:record) { "Hendrix | James | M | M | Purple | 11-27-1942" }
+  let (:encoded_record) { URI::encode(record) }
 
   describe 'POST /records' do
     it 'returns success message' do
-      post "/records", "record=#{record}"
+      post "/records", "record=#{encoded_record}"
       expect(last_response.body).to eq("Added the new record!")
       expect(last_response.status).to eq(201)
     end
 
     it 'returns 400 when passed unspecified param' do
-      post "/records", record
+      post "/records", encoded_record
       expect(last_response.status).to eq(400)
+    end
+
+    it 'writes to specified file' do
+      $write_file = 'new_records.txt'
+      post "/records", "record=#{encoded_record}"
+      expect(`tail -n 1 new_records.txt`).to eq("#{record}\n")
     end
 
   end

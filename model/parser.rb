@@ -4,12 +4,13 @@ class Parser
 
   attr_reader :library
 
-  def initialize(library = Library.new)
+  def initialize(library = Library.new, write_file = 'posted_records.txt')
     if library.class != Library
       raise ArgumentError, 'Argument must be a Library'
     else
       @library = library
     end
+    @write_file = write_file
   end
 
   def process(filenames)
