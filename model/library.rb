@@ -25,7 +25,9 @@ class Library
   end
 
   def sort_by_last_name!
-    @records.sort_by!{ |record| record.last_name }.reverse!
+    @records.sort! { |a, b| a.last_name == b.last_name ?
+                      b.first_name <=> a.first_name :
+                      b.last_name <=> a.last_name }
   end
 
   def display

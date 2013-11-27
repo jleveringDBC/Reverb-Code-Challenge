@@ -12,7 +12,7 @@ describe Record do
 
   describe '#display' do
 
-    it 'displays attributes in appropriate order' do
+    it 'displays attributes in order' do
       expect(valid_record.display).to eq("Kournikova Anna Female 06/03/1975 Red")
     end
 

@@ -1,5 +1,4 @@
 require_relative 'library'
-require_relative 'record'
 
 class Parser
 
@@ -14,37 +13,31 @@ class Parser
   end
 
   def process(filenames)
+    raise ArgumentError, 'Pass filenames in Array' unless [Array, Enumerator].include?(filenames.class)
     filenames.each do |filename|
       File.open(filename, 'r') do |f|
         while (line = f.gets)
-          if line.match(/\|/)
-            delimiter = "pipe"
-            record_info = line.match(/(.*) \| (.*) \| (.*) \| (.*) \| (.*) \| (.*)/)
-          elsif line.match(/,/)
-            delimiter = "comma"
-            record_info = line.match(/(.*), (.*), (.*), (.*), (.*)/)
-          else
-            delimiter = "space"
-            record_info = line.match(/(.*) (.*) (.*) (.*) (.*) (.*)/)
-          end
-          record_variables = parse_record(record_info, delimiter)
-          @library.add_record(Record.new(record_variables))
+          add_record_to_library(line)
         end
       end
     end
   end
 
   def process_new_record(line)
-    delimiter = delimiter(line)
-    record_info = match_data(line, delimiter)
-    record_variables = parse_record(record_info, delimiter)
-    @library.add_record(Record.new(record_variables))
-    File.open('posted_records.txt', 'a') do |f|
+    add_record_to_library(line)
+    File.open(@write_file, 'a') do |f|
       f.puts line
     end
   end
 
   private
+
+  def add_record_to_library(line)
+    delimiter = delimiter(line)
+    record_info = match_data(line, delimiter)
+    record_variables = parse_record(record_info, delimiter)
+    @library.add_record(Record.new(record_variables))
+  end
 
   def delimiter(line)
     if line.match(/\|/)

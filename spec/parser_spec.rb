@@ -14,7 +14,7 @@ describe Parser do
       expect{Parser.new("string")}.to raise_error(ArgumentError, 'Argument must be a Library')
     end
 
-    it 'initializes with empty Library without argument' do
+    it 'initializes an empty Library without argument' do
       expect(parser.library).to be_a(Library)
     end
   end
