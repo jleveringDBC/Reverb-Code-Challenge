@@ -18,7 +18,7 @@ describe RecordParser::API do
   end
 
   let (:parser) { new_parser }
-  let (:record) { "Hendrix | James | M | M | Purple | 11-27-1942" }
+  let (:record) { "Hendrix | Jimi | M | M | Purple | 11-27-1942" }
   let (:encoded_record) { URI::encode(record) }
 
   describe 'POST /records' do

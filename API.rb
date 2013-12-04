@@ -7,11 +7,11 @@ module RecordParser
     helpers do
       def new_parser
         if $write_file
-          fresh_parser = Parser.new(Library.new, $write_file)
+          fresh_parser = FileParser.new(Library.new, $write_file)
         else
-          fresh_parser = Parser.new
+          fresh_parser = FileParser.new
         end
-        fresh_parser.process($filenames)
+        fresh_parser.process_files($filenames)
         fresh_parser
       end
 
@@ -33,7 +33,7 @@ module RecordParser
         requires :record, type: String, desc: "Record to be added."
       end
       post do
-        parser.process_new_record(params[:record])
+        parser.process_posted_record(params[:record])
         return "Added the new record!"
       end
 
