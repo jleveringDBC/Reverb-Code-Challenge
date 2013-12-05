@@ -16,12 +16,17 @@ class FileParser
   end
 
   def process_files(filenames)
-    raise ArgumentError, 'filenames must respond to each' unless filenames.respond_to?(:each)
     filenames.each do |filename|
-      File.open(filename, 'r') do |f|
-        while (line = f.gets)
-          process_new_record(line)
-        end
+      read_lines(filename) do |line|
+        process_new_record(line)
+      end
+    end
+  end
+
+  def read_lines(filename)
+    File.open(filename, 'r') do |f|
+      while(line=f.gets)
+        yield(line)
       end
     end
   end
